@@ -21,10 +21,20 @@ This web app has been developed using the popular Django framework and Bootstrap
 To get this project up and running locally on your computer follow the following steps.
 
 1. Set up a python virtual environment
+
+```
+python3 -m venv .env
+source .env/bin/activate
+```
+
 2. Run the following commands
 
 ```
+$ pip install --only-binary Pillow Pillow
 $ pip install -r requirements.txt
+$ python manage.py makemigrations users
+$ python manage.py makemigrations todos
+$ python manage.py makemigrations
 $ python manage.py migrate
 $ python manage.py createsuperuser
 $ python manage.py runserver
