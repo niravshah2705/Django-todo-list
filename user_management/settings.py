@@ -146,7 +146,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'staticfiles'),
 )
 
-LOGIN_REDIRECT_URL = '/todos'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
 
 

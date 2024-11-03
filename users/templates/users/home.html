@@ -1,22 +1,46 @@
 {% extends "users/base.html" %}
-{% block title %} Home Page {% endblock title%}
+{% block title %} Task Manager - Home Page {% endblock title%}
 {% block content %}
     <div class="jumbotron">
         <h1 class="display-4">Welcome, {{user.first_name.title|default:'Guest'}}</h1>
         <p class="lead">
-            This is <b>user registration and login system</b> build with django which is
-            a Python-based free and open-source web framework that follows the model–template–views architectural pattern.
+            This is <b>Task Manager</b>. 
         </p>
+        <p>
+            Your personal space to organize, prioritize, and accomplish tasks efficiently.
+            Get started by adding a new task or reviewing your upcoming to-dos.
+        </p>
+        <h5>Some of the Key Features are: </h5>
+        <ul>
+            <li>🔥 Easy Task Management</li>
+            <li>📆 Schedule Reminders to stay on track</li>
+            <li>🎯 Set Priority Levels for each task</li>
+            <li>📊 Progress Tracker to monitor achievements</li>
+            <li>📝 Notes Section for extra details</li>
+        </ul>
+        <h5>Some Helpful Articles for Mastering Time Management: </h5>
+        <div >
+                <a  href="https://www.coursera.org/in/articles/time-management" target="_blank">
+                    <img class="todo-images" src="https://i.pinimg.com/564x/1b/05/f4/1b05f4cace8bfe071d4f5631133d5e65.jpg" alt="Manage time efficiently" style="width:84px;height:84px;"/>
+                </a>                          
+                <a href="https://ca.indeed.com/career-advice/career-development/daily-to-do-list" target="_blank">
+                    <img class="todo-images" src="https://i.pinimg.com/564x/ef/19/80/ef19806516eefc1520e3ca35bcea38c4.jpg" alt="Benefits of To Do Listing" style="width:84px;height:84px;"/>
+                </a>    
+                <a href="https://jamesclear.com/procrastination" target="_blank">
+                    <img class="todo-images" src="https://i.pinimg.com/564x/16/1a/8b/161a8bd959c053d1e52a03b6fe738298.jpg" alt="Overcoming Procrastination" style="width:84px;height:84px;"/>
+                </a>    
+        </div>
         <hr class="my-4">
 
         <p class="lead">
             {% if user.is_authenticated %}                
-                <a class="btn btn-primary btn-lg" href="{% url 'todos:index' %}" role="button">todos</a>
+                <a class="btn btn-primary btn-lg" href="{% url 'todos:index' %}" role="button">To-do</a>
                 <a class="btn btn-primary btn-lg" href="{% url 'logout' %}" role="button">Logout</a>
             {% else %}
                 <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Sign in</a>
             {% endif %}
         </p>
     </div>
+    
 
 {% endblock content %}

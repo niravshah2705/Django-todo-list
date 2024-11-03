@@ -8,12 +8,15 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def index(request):
     login_user = request.user
-    return render(request, 'todos/index.html', {'todo_list': Todo.objects.filter(user=login_user).order_by('-created_at'), 'user': login_user})
+    return render(request, 'todos/index.html', {'todo_list': Todo.objects.filter(user=login_user).order_by('isCompleted','-priority','created_at'), 'user': login_user})
 
 
 def add(request):
     title = request.POST['title']
-    Todo.objects.create(title=title, user=request.user)
+    description = request.POST['description']
+    priority = request.POST['priority']
+    due_date =request.POST['due_date']
+    Todo.objects.create(title=title,description=description,priority=priority,duedate=due_date, user=request.user)
 
     return redirect('todos:index')
 

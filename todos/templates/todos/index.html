@@ -1,7 +1,7 @@
 {% extends 'users/base.html' %}
 
 {% block title %}
-<title>Todo list by Chakshu Shah</title>
+Your Task List</title>
 {% endblock %}
 
 {% block content %}
@@ -12,8 +12,12 @@
     <div class="offset-md-2 col-lg-9">
       <div class="page-header">
         <h1>
-          {{ user }}'s Todo List 
+          {{ user }}'s Task List 
         </h1>
+        <p>
+          It's time to tackle your tasks head-on! Make sure to stay on top of your priorities! 🚀  
+          <br>What do you want to accomplish today? Let's get to work! 💪
+        </p>
       </div>
     </div>
   </div>
@@ -24,8 +28,23 @@
       <form method="post" action="{% url 'todos:add' %}">
         {% csrf_token %}
         <div class="form-row">
-          <div class="col-md-6">
-            <input type="text" class="form-control" name="title" placeholder="Do laundry" required>
+          <div class="col-md-6 mb-2">
+            <input type="text" class="form-control" name="title" placeholder="Accomplish..." required>
+          </div>
+          <div class="col-md-12 mb-2">
+            <textarea class="form-control" name="description" placeholder="Description (optional)"></textarea>
+          </div>
+          <div class="col-md-6 mb-2">
+            <label for="due_date">Due Date:</label>
+            <input type="date" class="form-control" name="due_date" placeholder="Due date">
+          </div>
+          <div class="col-md-6 mb-2">
+            <label for="priority">Priority (optional):</label>
+            <select class="form-control" name="priority">
+              <option value="2">High</option>
+              <option value="1">Medium</option>
+              <option value="0" selected="true">Low</option>
+            </select>
           </div>
           <div class="col-md-6">
             <button type="submit" name="submit" class="btn btn-outline-primary">
@@ -43,7 +62,14 @@
     <div class="offset-md-2 col-lg-6">
       <div class="list-group">
         {% for todo in todo_list %}
-        <div class="list-group-item {% if todo.isCompleted %} todo-complete {% endif %}">
+        <div class="list-group-item {% if todo.isCompleted %} todo-complete {% endif %}"
+        {% if todo.priority == 1 %}
+        style="background: yellow; color: black"
+        {% elif todo.priority == 2 %}
+        style="background: orange; color: black"
+        {% endif %}
+        {% if todo.description %} data-tooltip="{{ todo.description }}"{% endif %}
+        >
           <form style="display: inline;" method="post" action="{% url 'todos:update' todo.id %}">
             {% csrf_token %}
             <input type="checkbox" name="isCompleted" onchange="this.form.submit()" {% if todo.isCompleted %} checked
@@ -51,6 +77,8 @@
               title="{% if not todo.isCompleted %} mark as done {% else %} mark undone {% endif %}">
           </form>
           {{ todo.title }}
+          {% if todo.remaining_days %} |  Due in {{ todo.remaining_days }} day(s) {% endif %}
+          
           <a href="{% url 'todos:delete' todo.id %}" title="Delete">
             <i class="far fa-trash-alt"></i>
           </a>
